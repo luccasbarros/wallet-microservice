@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTransactionDTO } from './dtos/create-transaction.dto';
 import { WalletRepository } from './repository/wallet.repository';
@@ -11,8 +12,12 @@ export class WalletService {
   ) {}
 
   public async execute(data: CreateTransactionDTO) {
-    const transaction = await this.walletRepository.storeTransaction(data);
+    try {
+      const transaction = await this.walletRepository.storeTransaction(data);
 
-    return transaction;
+      return transaction;
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 }

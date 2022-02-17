@@ -9,7 +9,8 @@ const connection = TypeOrmModule.forRootAsync({
     password: 'pgpass@123',
     database: 'wallet',
     entities: [__dirname + '/../modules/*/entities/*.{js,ts}'],
-    synchronize: true,
+    synchronize: false,
+    migrations: [__dirname + './src/shared/typeorm/migration/*.ts'],
     autoLoadEntities: true,
   }),
 });

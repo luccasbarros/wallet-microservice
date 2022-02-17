@@ -1,11 +1,5 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
-import { CreateTransactionDTO } from './dtos/create-transaction.dto';
+import { Controller, Logger } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
 import { Wallet } from './entities/wallet.entity';
 import { WalletService } from './wallet.service';
 
@@ -13,12 +7,12 @@ import { WalletService } from './wallet.service';
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
-  @Post()
-  @UsePipes(ValidationPipe)
-  async storeTransaction(
-    @Body() createTransactionDTO: CreateTransactionDTO,
-  ): Promise<Wallet> {
-    const wallet = await this.walletService.execute(createTransactionDTO);
+  logger = new Logger(WalletController.name);
+
+  @EventPattern('create-transaction')
+  async storeTransaction(@Payload() transaction: Wallet): Promise<Wallet> {
+    this.logger.log(`transaction: ${JSON.stringify(transaction)} `);
+    const wallet = await this.walletService.execute(transaction);
     return wallet;
   }
 }

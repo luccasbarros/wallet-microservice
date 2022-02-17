@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('wallet')
+@Entity('transactions')
 export class Wallet {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   public readonly id: string;
 
   @Column()

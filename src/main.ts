@@ -15,5 +15,7 @@ async function bootstrap() {
   });
 
   app.useLogger(logger);
+
+  app.listen();
 }
 bootstrap();

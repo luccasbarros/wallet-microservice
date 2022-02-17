@@ -1,13 +1,8 @@
-import { getRepository, Repository } from 'typeorm';
-import { Wallet } from '../entity/Wallet';
-import { IWalletRepository } from './implementation/IWalletRepository';
+import { EntityRepository, Repository } from 'typeorm';
+import { Wallet } from '../entities/wallet.entity';
 
-export class WalletRepository implements IWalletRepository {
-  private ormRepository: Repository<Wallet>;
-
-  constructor() {
-    this.ormRepository = getRepository(Wallet);
-  }
+@EntityRepository(Wallet)
+export class WalletRepository extends Repository<Wallet> {
   storeTransaction(): Promise<Wallet> {
     throw new Error('Method not implemented.');
   }

@@ -11,6 +11,6 @@ export class Wallet {
   @Column()
   public readonly type: string;
 
-  @Column()
+  @Column('int')
   public readonly amount: number;
 }

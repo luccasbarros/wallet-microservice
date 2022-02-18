@@ -9,4 +9,14 @@ export class WalletRepository extends Repository<Wallet> {
     await this.save(transaction);
     return transaction;
   }
+
+  public async list(): Promise<Wallet[]> {
+    const transactions = await this.find();
+    return transactions;
+  }
+
+  public async findById(id: string): Promise<Wallet> {
+    const transaction = await this.findOne({ id });
+    return transaction;
+  }
 }

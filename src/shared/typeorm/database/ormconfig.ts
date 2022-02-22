@@ -12,6 +12,7 @@ const connection = TypeOrmModule.forRootAsync({
     synchronize: false,
     migrations: [__dirname + './src/shared/typeorm/migration/*.ts'],
     autoLoadEntities: true,
+    cli: { migrationsDir: 'src/shared/typeorm/migration' },
   }),
 });
 

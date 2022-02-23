@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTransactionDTO } from './dtos/create-transaction.dto';
 import { Wallet } from './entities/wallet.entity';
 import { WalletRepository } from './repository/wallet.repository';
+import { TransactionType } from './enum/TransactionType';
 
 @Injectable()
 export class WalletService {
@@ -15,6 +16,10 @@ export class WalletService {
 
   public async create(data: CreateTransactionDTO): Promise<Wallet> {
     try {
+      if (data.amount <= 0) {
+        throw new BadRequestException('Invalid amount');
+      }
+
       const transaction = await this.walletRepository.storeTransaction(data);
 
       return transaction;

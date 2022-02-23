@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { TransactionType } from '../enum/TransactionType';
 
 @Entity('transactions')
 export class Wallet {
@@ -8,9 +14,15 @@ export class Wallet {
   @Column()
   public readonly user_id: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: TransactionType,
+  })
   public readonly type: string;
 
   @Column('int')
   public readonly amount: number;
+
+  @CreateDateColumn()
+  public readonly created_at: Date;
 }

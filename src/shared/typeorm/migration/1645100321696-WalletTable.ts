@@ -3,6 +3,7 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 export class WalletTable1645100321696 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
+    await queryRunner.query;
     await queryRunner.createTable(
       new Table({
         name: 'transactions',
@@ -20,10 +21,15 @@ export class WalletTable1645100321696 implements MigrationInterface {
           {
             name: 'type',
             type: 'varchar',
+            enum: ['CREDIT', 'DEBIT'],
           },
           {
             name: 'amount',
             type: 'integer',
+          },
+          {
+            name: 'created_at',
+            type: 'timestamptz',
           },
         ],
       }),
